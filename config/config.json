@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "user123",
-    "database": "sports_db",
+    "database": "sport_manage_db",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },

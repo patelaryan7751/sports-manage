@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Session.hasMany(models.UserSession, {
+        foreignKey: "sessionId",
+        onDelete: "CASCADE",
+      });
     }
   }
   Session.init(
