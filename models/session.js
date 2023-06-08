@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "sessionId",
         onDelete: "CASCADE",
       });
+      Session.belongsTo(models.User, {
+        foreignKey: "creator_id",
+        onDelete: "CASCADE",
+      });
     }
   }
   Session.init(

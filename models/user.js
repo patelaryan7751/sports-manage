@@ -13,6 +13,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "userId",
         onDelete: "CASCADE",
       });
+      User.hasMany(models.Sport, {
+        foreignKey: "creator_id",
+        onDelete: "CASCADE",
+      });
+      User.hasMany(models.Session, {
+        foreignKey: "creator_id",
+        onDelete: "CASCADE",
+      });
     }
   }
   User.init(

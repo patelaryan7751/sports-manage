@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Sport.belongsTo(models.User, {
+        foreignKey: "creator_id",
+        onDelete: "CASCADE",
+      });
+    }
+
+    static getSports() {
+      return Sport.findAll();
     }
   }
   Sport.init(
