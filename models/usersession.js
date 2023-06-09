@@ -17,6 +17,13 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "sessionId",
         onDelete: "CASCADE",
       });
+      UserSession.belongsTo(models.Sport, {
+        foreignKey: "sport_id",
+        onDelete: "CASCADE",
+      });
+    }
+    static getUserSessions() {
+      return UserSession.findAll();
     }
   }
   UserSession.init(

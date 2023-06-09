@@ -8,6 +8,7 @@ router.post("/", async (request, response) => {
     const usersession = await UserSession.create({
       userId: request.body.userId,
       sessionId: request.body.sessionId,
+      sport_id: request.body.sport_id,
     });
     response.json(usersession);
   } catch (error) {
@@ -20,6 +21,7 @@ router.get("/", async (request, response) => {
     const usersessions = await UserSession.findAll();
     response.json(usersessions);
   } catch (error) {
+    console.log(error);
     response.status(500).json({ error: error });
   }
 });
