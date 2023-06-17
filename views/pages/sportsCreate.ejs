@@ -9,16 +9,20 @@
 </head>
 <body  class="h-full bg-yellow-50">
 <div>
+
 <%- include('../components/sidebar.ejs') %>
+  
     <main class="py-10 lg:pl-72">
       <div class="px-4 sm:px-6 lg:px-8">
         <!-- Your content -->
         <div class="h-screen text-center">
-          <%- include("../components/sportsCards.ejs",{sports:sports,sessions:sessions}) %>
+          <%- include("../components/sportsCreateForm.ejs") %>
         </div>
       </div>
     </main>
-  </div>   
+  </div>
+  
+   
 </body>
 </html>
 

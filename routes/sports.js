@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router();
 const { Sport } = require("../models");
 
+// all operations on sports
+
 router.post("/", async (request, response) => {
   try {
     const sport = await Sport.create({
@@ -32,6 +34,11 @@ router.delete("/:id", async (request, response) => {
   } catch (error) {
     response.status(500).json({ error: error });
   }
+});
+
+// all operations on sports views
+router.get("/create", async (request, response) => {
+  response.render("./pages/sportsCreate.ejs");
 });
 
 module.exports = router;

@@ -17,6 +17,13 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "creator_id",
         onDelete: "CASCADE",
       });
+      Session.belongsTo(models.Sport, {
+        foreignKey: "sport_id",
+        onDelete: "CASCADE",
+      });
+    }
+    static getSessions() {
+      return Session.findAll();
     }
   }
   Session.init(

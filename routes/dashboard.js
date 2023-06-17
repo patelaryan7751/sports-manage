@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 const express = require("express");
 const router = express.Router();
-const { Sport, UserSession } = require("../models");
+const { Sport, Session } = require("../models");
 
 // router.post("/", async (request, response) => {
 //   try {
@@ -18,11 +18,11 @@ const { Sport, UserSession } = require("../models");
 router.get("/", async (req, res) => {
   try {
     const sports = await Sport.getSports();
-    const userSessions = await UserSession.getUserSessions();
+    const sessions = await Session.getSessions();
     if (req.accepts("html")) {
       res.render("./pages/dashboard", {
         sports: sports,
-        userSessions: userSessions,
+        sessions: sessions,
       });
     } else {
       res.json({ sports });

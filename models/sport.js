@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "creator_id",
         onDelete: "CASCADE",
       });
+      Sport.hasMany(models.Session, {
+        foreignKey: "sport_id",
+        onDelete: "CASCADE",
+      });
       Sport.hasMany(models.UserSession, {
         foreignKey: "sport_id",
         onDelete: "CASCADE",

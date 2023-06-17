@@ -10,6 +10,7 @@ router.post("/", async (request, response) => {
       place: request.body.place,
       numberOfPlayers: request.body.numberOfPlayers,
       creator_id: request.body.creator_id,
+      sport_id: request.body.sport_id,
     });
     response.json(session);
   } catch (error) {
