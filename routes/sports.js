@@ -7,10 +7,7 @@ const { Sport, Session } = require("../models");
 
 router.post("/", async (request, response) => {
   try {
-    await Sport.create({
-      name: request.body.name,
-      creator_id: request.body.creator_id,
-    });
+    await Sport.createNewSport(request.body.name, request.body.creator_id);
     return response.redirect("/dashboard");
   } catch (error) {
     response.status(500).json({ error: error });
@@ -28,8 +25,7 @@ router.get("/", async (request, response) => {
 
 router.delete("/:id", async (request, response) => {
   try {
-    const sport = await Sport.findByPk(request.params.id);
-    await sport.destroy();
+    await Sport.removeSport(request.params.id);
     response.json({ message: "Sport deleted" });
   } catch (error) {
     response.status(500).json({ error: error });

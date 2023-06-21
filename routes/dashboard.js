@@ -23,6 +23,7 @@ router.get("/", async (req, res) => {
       res.render("./pages/dashboard", {
         sports: sports,
         sessions: sessions,
+        csrfToken: req.csrfToken(),
       });
     } else {
       res.json({ sports });

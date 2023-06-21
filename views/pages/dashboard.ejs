@@ -4,8 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>SM - Sports Manager</title>
+    <script>
+        const token=document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      function deleteSports(id){
+        fetch(`/sports/${id}`,{
+          method: 'delete',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+                    '_csrf': token
+                })
+        }).then((res)=>{
+          if(res.ok) {
+          window.location.href = '/dashboard'
+          }
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
+      }
+    </script>
 </head>
 <body  class="h-full bg-yellow-50">
 <div>
@@ -19,6 +41,7 @@
       </div>
     </main>
   </div>   
+  <%- include('../components/mobileNavbar.ejs') %>
 </body>
 </html>
 

@@ -20,6 +20,15 @@ app.set("view engine", "ejs");
 app.get("/", (req, res) => {
   res.render("index");
 });
+app.get("/profile", (req, res) => {
+  res.render("pages/profile");
+});
+app.get("/signup", (req, res) => {
+  res.render("pages/signUpPage", { csrfToken: req.csrfToken() });
+});
+app.get("/login", (req, res) => {
+  res.render("pages/loginPage", { csrfToken: req.csrfToken() });
+});
 
 app.use("/users", usersRoutes);
 app.use("/sports", sportsRoutes);
