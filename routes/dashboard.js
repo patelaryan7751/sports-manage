@@ -3,31 +3,16 @@ const express = require("express");
 const router = express.Router();
 const { Sport, Session } = require("../models");
 
-// router.post("/", async (request, response) => {
-//   try {
-//     const sport = await Sport.create({
-//       name: request.body.name,
-//       creator_id: request.body.creator_id,
-//     });
-//     response.json(sport);
-//   } catch (error) {
-//     response.status(500).json({ error: error });
-//   }
-// });
-
 router.get("/", async (req, res) => {
   try {
     const sports = await Sport.getSports();
     const sessions = await Session.getSessions();
-    if (req.accepts("html")) {
-      res.render("./pages/dashboard", {
-        sports: sports,
-        sessions: sessions,
-        csrfToken: req.csrfToken(),
-      });
-    } else {
-      res.json({ sports });
-    }
+    res.render("./pages/dashboard", {
+      sports: sports,
+      sessions: sessions,
+      user: req.user,
+      csrfToken: req.csrfToken(),
+    });
   } catch (error) {
     res.status(500).json({ error: error });
   }

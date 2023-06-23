@@ -5,9 +5,17 @@ const { Sport, Session } = require("../models");
 
 // all operations on sports
 
-router.post("/", async (request, response) => {
+const requirePublisher = (req, res, next) => {
+  if (req.user && req.user.role === "admin") {
+    return next();
+  } else {
+    res.status(401).json({ message: "Unauthorized user." });
+  }
+};
+
+router.post("/", requirePublisher, async (request, response) => {
   try {
-    await Sport.createNewSport(request.body.name, request.body.creator_id);
+    await Sport.createNewSport(request.body.name, request.user.id);
     return response.redirect("/dashboard");
   } catch (error) {
     response.status(500).json({ error: error });
@@ -23,7 +31,7 @@ router.get("/", async (request, response) => {
   }
 });
 
-router.delete("/:id", async (request, response) => {
+router.delete("/:id", requirePublisher, async (request, response) => {
   try {
     await Sport.removeSport(request.params.id);
     response.json({ message: "Sport deleted" });
@@ -33,7 +41,7 @@ router.delete("/:id", async (request, response) => {
 });
 
 // all operations on sports views
-router.get("/create", async (request, response) => {
+router.get("/create", requirePublisher, async (request, response) => {
   response.render("./pages/sportsCreate.ejs", {
     csrfToken: request.csrfToken(),
   });

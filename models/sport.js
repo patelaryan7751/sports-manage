@@ -26,6 +26,13 @@ module.exports = (sequelize, DataTypes) => {
     static getSports() {
       return Sport.findAll();
     }
+    static getSportsByCreatorId(id) {
+      return Sport.findAll({
+        where: {
+          creator_id: id,
+        },
+      });
+    }
     static createNewSport(name, creator_id) {
       return Sport.create({
         name: name,

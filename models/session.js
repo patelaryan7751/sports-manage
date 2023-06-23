@@ -25,6 +25,13 @@ module.exports = (sequelize, DataTypes) => {
     static getSessions() {
       return Session.findAll();
     }
+    static getSessionByCreatorId(id) {
+      return Session.findAll({
+        where: {
+          creator_id: id,
+        },
+      });
+    }
     static getSessionBySportId(id) {
       return Session.findAll({
         where: {
