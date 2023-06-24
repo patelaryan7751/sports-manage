@@ -35,6 +35,15 @@ router.get("/", async (request, response) => {
   }
 });
 
+router.get("/players", async (request, response) => {
+  try {
+    const users = await User.getPlayers();
+    response.json(users);
+  } catch (error) {
+    response.status(500).json({ error: error });
+  }
+});
+
 router.delete("/:id", async (request, response) => {
   try {
     const user = await User.findByPk(request.params.id);

@@ -22,6 +22,13 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
       });
     }
+    static getPlayers() {
+      return User.findAll({
+        where: {
+          role: "player",
+        },
+      });
+    }
   }
   User.init(
     {

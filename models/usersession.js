@@ -25,6 +25,13 @@ module.exports = (sequelize, DataTypes) => {
     static getUserSessions() {
       return UserSession.findAll();
     }
+    static addPlayerToSession(userId, sessionId, sport_id) {
+      return UserSession.create({
+        userId: userId,
+        sessionId: sessionId,
+        sport_id: sport_id,
+      });
+    }
   }
   UserSession.init(
     {
