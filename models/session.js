@@ -39,12 +39,21 @@ module.exports = (sequelize, DataTypes) => {
         },
       });
     }
+    static getSessionById(id) {
+      return Session.findAll({
+        where: {
+          id: id,
+        },
+      });
+    }
   }
   Session.init(
     {
       time: DataTypes.DATE,
       place: DataTypes.STRING,
       numberOfPlayers: DataTypes.INTEGER,
+      isCancelled: DataTypes.BOOLEAN,
+      cancelReason: DataTypes.STRING,
     },
     {
       sequelize,

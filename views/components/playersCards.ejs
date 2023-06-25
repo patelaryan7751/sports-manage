@@ -1,0 +1,15 @@
+<h2 class="text-3xl font-medium text-black my-2">Players </h2>
+<ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+    <%  for(var i=0; i<players.length; i++) {  %>
+      <li class="col-span-1 flex rounded-md shadow-sm">
+        <div class="flex w-16 flex-shrink-0 items-center justify-center <%= session.isCancelled?"bg-red-600":"bg-indigo-600" %> rounded-l-md text-sm font-medium text-white"><%= sport.name.substring(0, 2) %></div>
+        <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white">
+          <div class="flex-1 truncate px-4 py-2 text-sm">
+            <a href="#" class="font-medium text-gray-900 hover:text-gray-600"><%= players[i].User.name  %></a>
+            <p class="text-gray-500"><%= players[i].User.role  %></p>
+          </div>
+        </div>
+      </li>
+      <% } %>
+   
+  </ul>

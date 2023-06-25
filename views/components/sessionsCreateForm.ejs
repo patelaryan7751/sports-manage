@@ -44,7 +44,6 @@
             playersList.addEventListener('change', function() {
               selectedPlayersId = Array.from(this.selectedOptions, option => option.value);
               selectedPlayers = Array.from(this.selectedOptions, option => option.text);
-          
               if (selectedPlayers.length > 0) {
                 selectedPlayersMessage.textContent = `Selected players: ${selectedPlayers.join(', ')}`;
               } else {

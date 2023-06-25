@@ -1,0 +1,6 @@
+<h2 class="text-4xl font-medium text-black"><%= sport.name  %> #<%= session.id %></h2>
+<% if(session.isCancelled) { %>
+    <p class="text-xl text-gray-500 my-2">This session is canceled for "<%= session.cancelReason %>"</p>
+    <% } else { %>
+<p class="text-xl text-gray-500 my-2">This session is scheduled for <%= session.time.toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) %>, to be played at "<%= session.place %>" </p>
+<% } %>

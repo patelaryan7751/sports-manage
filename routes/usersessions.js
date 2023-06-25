@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 const express = require("express");
 const router = express.Router();
-const { UserSession, User } = require("../models");
+const { UserSession, User, Session } = require("../models");
 
 router.post("/", async (request, response) => {
   try {
@@ -26,11 +26,24 @@ router.get("/", async (request, response) => {
   }
 });
 
-router.delete("/:id", async (request, response) => {
+router.delete("/:userId/:sessionId", async (request, response) => {
   try {
-    const usersession = await UserSession.findByPk(request.params.id);
-    await usersession.destroy();
-    response.json({ message: "UserSession deleted" });
+    await UserSession.playerLeaveSession(
+      request.params.userId,
+      request.params.sessionId
+    );
+    const getSessionSlots = await Session.getSessionById(
+      request.params.sessionId
+    )[0];
+    console.log(getSessionSlots, "klllll");
+    const updatedSessionSlots = Number(getSessionSlots) + 1;
+    await Session.update(
+      {
+        numberOfPlayers: updatedSessionSlots,
+      },
+      { where: { id: request.params.sessionId } }
+    );
+    response.json({ message: "Player removed from session" });
   } catch (error) {
     console.log(error);
     response.status(500).json({ error: error });

@@ -4,25 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="<%= csrfToken %>">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>SM - Sports Manager</title>
 </head>
 <body  class="h-full bg-yellow-50">
 <div>
+
 <%- include('../components/sidebar.ejs') %>
+  
     <main class="py-10 lg:pl-72">
       <div class="px-4 sm:px-6 lg:px-8">
         <!-- Your content -->
-        <div class="">
-          <%- include('../components/sessionHeader.ejs') %>
-            <%- include("../components/playersCards.ejs") %>
-            <%- include("../components/buttonsInSession.ejs")  %>
+        <div class="h-screen text-center">
+          <%- include("../components/cancelSessionForm.ejs") %>
         </div>
       </div>
     </main>
-  </div>  
-  <%- include('../components/mobileNavbar.ejs') %> 
+  </div>
+  
+  <%- include('../components/mobileNavbar.ejs') %>
 </body>
 </html>
 

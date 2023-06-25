@@ -32,6 +32,14 @@ module.exports = (sequelize, DataTypes) => {
         sport_id: sport_id,
       });
     }
+    static playerLeaveSession(userId, sessionId) {
+      return UserSession.destroy({
+        where: {
+          userId: userId,
+          sessionId: sessionId,
+        },
+      });
+    }
   }
   UserSession.init(
     {

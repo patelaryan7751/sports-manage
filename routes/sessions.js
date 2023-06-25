@@ -13,6 +13,8 @@ router.post("/", async (request, response) => {
       numberOfPlayers: request.body.numberOfPlayers,
       creator_id: request.user.id,
       sport_id: request.body.sport_id,
+      isCancelled: false,
+      cancelReason: "",
     });
     console.log(session);
     selectedPlayers.map(async (playerId) => {
@@ -62,11 +64,32 @@ router.get("/:id", async (request, response) => {
       session: session[0],
       players: players,
       user: request.user,
+      csrfToken: request.csrfToken(),
     });
   } catch (error) {
     console.log(error);
     response.status(500).json({ error: error });
   }
+});
+router.post("/:id/", async (request, response) => {
+  try {
+    await Session.update(
+      {
+        isCancelled: true,
+        cancelReason: request.body.cancelReason,
+      },
+      { where: { id: request.params.id } }
+    );
+    response.redirect(`/sessions/${request.params.id}`);
+  } catch (error) {
+    response.status(500).json({ error: error });
+  }
+});
+router.get("/:id/cancel", async (request, response) => {
+  response.render("./pages/cancelSession.ejs", {
+    sessionId: request.params.id,
+    csrfToken: request.csrfToken(),
+  });
 });
 
 module.exports = router;
