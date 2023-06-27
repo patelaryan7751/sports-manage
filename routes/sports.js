@@ -44,6 +44,7 @@ router.delete("/:id", requirePublisher, async (request, response) => {
 router.get("/create", requirePublisher, async (request, response) => {
   response.render("./pages/sportsCreate.ejs", {
     csrfToken: request.csrfToken(),
+    user: request.user,
   });
 });
 
@@ -53,6 +54,7 @@ router.get("/:id/session/create", async (request, response) => {
     csrfToken: request.csrfToken(),
     sportId: request.params.id,
     players: players,
+    user: request.user,
   });
 });
 

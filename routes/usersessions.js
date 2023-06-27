@@ -32,10 +32,9 @@ router.delete("/:userId/:sessionId", async (request, response) => {
       request.params.userId,
       request.params.sessionId
     );
-    const getSessionSlots = await Session.getSessionById(
-      request.params.sessionId
-    )[0];
-    console.log(getSessionSlots, "klllll");
+    const session = await Session.getSessionById(request.params.sessionId);
+    const getSessionSlots = session.map((user) => user.toJSON())[0]
+      .numberOfPlayers;
     const updatedSessionSlots = Number(getSessionSlots) + 1;
     await Session.update(
       {
@@ -44,6 +43,30 @@ router.delete("/:userId/:sessionId", async (request, response) => {
       { where: { id: request.params.sessionId } }
     );
     response.json({ message: "Player removed from session" });
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({ error: error });
+  }
+});
+
+router.post("/:sportId/:userId/:sessionId", async (request, response) => {
+  try {
+    await UserSession.addPlayerToSession(
+      request.params.userId,
+      request.params.sessionId,
+      request.params.sportId
+    );
+    const session = await Session.getSessionById(request.params.sessionId);
+    const getSessionSlots = session.map((user) => user.toJSON())[0]
+      .numberOfPlayers;
+    const updatedSessionSlots = Number(getSessionSlots) - 1;
+    await Session.update(
+      {
+        numberOfPlayers: updatedSessionSlots,
+      },
+      { where: { id: request.params.sessionId } }
+    );
+    response.json({ message: "Player added to session" });
   } catch (error) {
     console.log(error);
     response.status(500).json({ error: error });

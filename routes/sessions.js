@@ -89,6 +89,7 @@ router.get("/:id/cancel", async (request, response) => {
   response.render("./pages/cancelSession.ejs", {
     sessionId: request.params.id,
     csrfToken: request.csrfToken(),
+    user: request.user,
   });
 });
 
