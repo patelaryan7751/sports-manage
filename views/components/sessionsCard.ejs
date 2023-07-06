@@ -1,0 +1,28 @@
+<li class="col-span-1 flex rounded-md shadow-sm">
+    <div class="flex w-16 flex-shrink-0 items-center justify-center <%= session.isCancelled?"bg-red-600":"bg-indigo-600" %> rounded-l-md text-sm font-medium text-white"><%= sport.name.substring(0, 2) %></div>
+    <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white">
+      <div class="flex-1 truncate px-4 py-2 text-sm">
+        <a href="/sessions/<%= session.id %>" class="font-medium <%= session.isCancelled?"line-through":"" %> text-gray-900 hover:text-gray-600"><%= session.time.toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) %></a>
+        <% if (session.isCancelled) { %>
+          <p class="text-gray-500">Session Cancelled</p>
+        <% } else { %>
+            <% 
+            const currentDate = new Date().toISOString().split('T')[0];
+            const sessionDate = session.time.toISOString().split('T')[0];
+            if (sessionDate<currentDate) { %>
+                <p class="text-gray-500">Session Completed</p>
+              <% } else { %>
+                <p class="text-gray-500"><%= session.numberOfPlayers %> Slots left</p>
+              <% } %>
+        <% } %>
+       
+      </div>
+      <div class="flex-shrink-0 pr-2">
+        <a href="/sessions/<%= session.id %>" type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-transparent bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+              </svg>                      
+        </a>
+      </div>
+    </div>
+  </li>
