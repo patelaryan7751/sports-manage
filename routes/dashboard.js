@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 const express = require("express");
 const router = express.Router();
-const { Sport, Session } = require("../models");
+const { Sport, Session, UserSession } = require("../models");
 
 router.get("/", async (req, res) => {
   try {
@@ -16,6 +16,16 @@ router.get("/", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error });
   }
+});
+
+router.get("/playerOnlySessions/", async (request, response) => {
+  const userId = request.user.id;
+  response.render("./pages/playersSessions", {
+    user: request.user,
+    createdSessions: await Session.getSessionByCreatorId(userId),
+    joinedSessions: await UserSession.getUserSessionByUserId(userId),
+    csrfToken: request.csrfToken(),
+  });
 });
 
 module.exports = router;

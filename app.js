@@ -21,6 +21,7 @@ const loginSessionsRoutes = require("./routes/loginSession");
 const signupRoutes = require("./routes/signup");
 const profileRoutes = require("./routes/profile");
 const sigoutRoutes = require("./routes/signout");
+const playerSessionsRoutes = require("./routes/playerSessions");
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("shh! some secret string"));
@@ -95,6 +96,11 @@ app.use("/sports", connectEnsureLogin.ensureLoggedIn(), sportsRoutes);
 app.use("/sessions", connectEnsureLogin.ensureLoggedIn(), sessionsRoutes);
 app.use("/usersessions", userSessionsRoutes);
 app.use("/dashboard", connectEnsureLogin.ensureLoggedIn(), dashboardRoutes);
+app.use(
+  "/playerSessions",
+  connectEnsureLogin.ensureLoggedIn(),
+  playerSessionsRoutes
+);
 app.use("/login", ensureNotAuthenticated, loginRoutes);
 app.use("/loginSession", loginSessionsRoutes);
 app.use("/signup", ensureNotAuthenticated, signupRoutes);
