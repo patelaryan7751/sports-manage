@@ -22,6 +22,7 @@ const signupRoutes = require("./routes/signup");
 const profileRoutes = require("./routes/profile");
 const sigoutRoutes = require("./routes/signout");
 const playerSessionsRoutes = require("./routes/playerSessions");
+const reportsRoutes = require("./routes/reports");
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("shh! some secret string"));
@@ -94,6 +95,7 @@ app.get("/", ensureNotAuthenticated, (req, res) => {
 app.use("/users", usersRoutes);
 app.use("/sports", connectEnsureLogin.ensureLoggedIn(), sportsRoutes);
 app.use("/sessions", connectEnsureLogin.ensureLoggedIn(), sessionsRoutes);
+app.use("/reports", connectEnsureLogin.ensureLoggedIn(), reportsRoutes);
 app.use("/usersessions", userSessionsRoutes);
 app.use("/dashboard", connectEnsureLogin.ensureLoggedIn(), dashboardRoutes);
 app.use(

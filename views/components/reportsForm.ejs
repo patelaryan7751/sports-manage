@@ -1,0 +1,75 @@
+<div class="px-6 py-6 lg:px-8 bg-yellow-50 h-screen">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Enter the time period to get reports</h2>
+    </div>
+  
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <form id="reportForm" class="space-y-6">
+        <div>
+            <div class="flex items-center justify-between">
+            <label for="start_time" class="text-sm font-medium leading-6 text-gray-900">Start Date</label>
+            </div>
+            <div class="mt-2">
+              <input id="start_time" name="start_time" type="date"  required class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center justify-between">
+            <label for="end_time" class="text-sm font-medium leading-6 text-gray-900">End Date</label>
+            </div>
+            <div class="mt-2">
+              <input id="end_time" name="end_time" type="date"  required class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+          </div> 
+          
+          <div>
+            <div class="flex items-center justify-between">
+              <p id="error" class="text-center font-medium leading-6 text-red-500"></p>
+            </div>
+          </div>
+        <div>
+          <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get Reports</button>
+        </div>
+      </form>
+      <script>
+        const form = document.getElementById('reportForm');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault(); // Prevent form submission
+
+  const startDate = document.getElementById('start_time').value;
+  const endDate = document.getElementById('end_time').value;
+  const csrfToken=document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  const data = {
+    start_time: startDate,
+    end_time: endDate,
+    _csrf: csrfToken
+  };
+
+  fetch('/reports/getData', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Error: ' + response.status);
+      }
+    })
+    .then(reports => {
+      // Handle the response data (reports) here
+      console.log(reports);
+    })
+    .catch(error => {
+      // Handle any errors that occurred during the request
+      console.error(error);
+    });
+});
+
+      </script>
+    </div>
+  </div>
