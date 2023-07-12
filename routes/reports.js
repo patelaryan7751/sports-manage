@@ -2,7 +2,7 @@
 const express = require("express");
 const { Op } = require("sequelize");
 const router = express.Router();
-const { Session } = require("../models");
+const { Sport, Session, User } = require("../models");
 
 router.get("/", async (request, response) => {
   response.render("./pages/reports", {
@@ -21,8 +21,38 @@ router.post("/getData", async (request, response) => {
           [Op.between]: [startDate, endDate],
         },
       },
+      include: [
+        {
+          model: Sport,
+          attributes: ["name"],
+        },
+      ],
     });
-    response.json(sessions);
+    const players = await User.getPlayers();
+    const sportCount = sessions.reduce((count, obj) => {
+      const sportName = obj.Sport.name;
+      count[sportName] = (count[sportName] || 0) + 1;
+      return count;
+    }, {});
+
+    // Find the maximum count
+    const maxCount = Math.max(...Object.values(sportCount));
+
+    // Find the sport(s) with the maximum count
+    const mostPlayedSports = Object.keys(sportCount).filter(
+      (sport) => sportCount[sport] === maxCount
+    );
+
+    console.log("Most played sport(s):", mostPlayedSports);
+
+    response.render("./pages/reportsViewStats", {
+      user: request.user,
+      sessions: sessions,
+      startDate: startDate,
+      endDate: endDate,
+      players: players,
+      mostPlayedSports: mostPlayedSports,
+    });
   } catch (error) {
     console.log(error);
     response.status(500).json({ error: error });

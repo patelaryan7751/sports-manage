@@ -4,7 +4,8 @@
     </div>
   
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form id="reportForm" class="space-y-6">
+      <form id="reportForm" action="/reports/getData" method="POST" class="space-y-6">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
         <div>
             <div class="flex items-center justify-between">
             <label for="start_time" class="text-sm font-medium leading-6 text-gray-900">Start Date</label>
@@ -21,7 +22,6 @@
               <input id="end_time" name="end_time" type="date"  required class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             </div>
           </div> 
-          
           <div>
             <div class="flex items-center justify-between">
               <p id="error" class="text-center font-medium leading-6 text-red-500"></p>
@@ -31,7 +31,7 @@
           <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get Reports</button>
         </div>
       </form>
-      <script>
+      <!-- <script>
         const form = document.getElementById('reportForm');
 
 form.addEventListener('submit', (event) => {
@@ -70,6 +70,6 @@ form.addEventListener('submit', (event) => {
     });
 });
 
-      </script>
+      </script> -->
     </div>
   </div>
