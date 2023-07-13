@@ -31,15 +31,6 @@ router.get("/", async (request, response) => {
   }
 });
 
-router.delete("/:id", requirePublisher, async (request, response) => {
-  try {
-    await Sport.removeSport(request.params.id);
-    response.json({ message: "Sport deleted" });
-  } catch (error) {
-    response.status(500).json({ error: error });
-  }
-});
-
 // all operations on sports views
 router.get("/create", requirePublisher, async (request, response) => {
   response.render("./pages/sportsCreate.ejs", {

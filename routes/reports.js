@@ -4,14 +4,22 @@ const { Op } = require("sequelize");
 const router = express.Router();
 const { Sport, Session, User } = require("../models");
 
-router.get("/", async (request, response) => {
+const requirePublisher = (req, res, next) => {
+  if (req.user && req.user.role === "admin") {
+    return next();
+  } else {
+    res.status(401).json({ message: "Unauthorized user." });
+  }
+};
+
+router.get("/", requirePublisher, async (request, response) => {
   response.render("./pages/reports", {
     user: request.user,
     csrfToken: request.csrfToken(),
   });
 });
 
-router.post("/getData", async (request, response) => {
+router.post("/getData", requirePublisher, async (request, response) => {
   const startDate = request.body.start_time;
   const endDate = request.body.end_time;
   try {

@@ -3,7 +3,15 @@ const express = require("express");
 const router = express.Router();
 const { Sport, Session, UserSession } = require("../models");
 
-router.get("/", async (request, response) => {
+const requirePublisher = (req, res, next) => {
+  if (req.user && req.user.role === "player") {
+    return next();
+  } else {
+    res.status(401).json({ message: "Unauthorized user." });
+  }
+};
+
+router.get("/", requirePublisher, async (request, response) => {
   const userId = request.user.id;
   const createdSessions = await Session.findAll({
     where: { creator_id: userId },
@@ -81,7 +89,7 @@ router.get("/", async (request, response) => {
   });
 });
 
-router.get("/todaysSessions", async (request, response) => {
+router.get("/todaysSessions", requirePublisher, async (request, response) => {
   const userId = request.user.id;
   const createdSessions = await Session.findAll({
     where: { creator_id: userId },
@@ -156,7 +164,7 @@ router.get("/todaysSessions", async (request, response) => {
     csrfToken: request.csrfToken(),
   });
 });
-router.get("/createdSessions", async (request, response) => {
+router.get("/createdSessions", requirePublisher, async (request, response) => {
   const userId = request.user.id;
   const createdSessions = await Session.findAll({
     where: { creator_id: userId },
@@ -174,7 +182,7 @@ router.get("/createdSessions", async (request, response) => {
   });
 });
 
-router.get("/joinedSessions", async (request, response) => {
+router.get("/joinedSessions", requirePublisher, async (request, response) => {
   const userId = request.user.id;
   const joinedSessions = await UserSession.findAll({
     where: { userId: userId },
