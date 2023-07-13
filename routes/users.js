@@ -6,8 +6,20 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 router.post("/", async (request, response) => {
-  const hashedPassword = await bcrypt.hash(request.body.password, saltRounds);
   try {
+    const existingUser = await User.findOne({
+      where: { email: request.body.email },
+    });
+    const isPasswordSixLettered = request.body.password.length >= 6;
+    if (existingUser) {
+      return response.status(400).json({ error: "Email already exists" });
+    }
+    if (!isPasswordSixLettered) {
+      return response
+        .status(400)
+        .json({ error: "Password should be 6 characters long" });
+    }
+    const hashedPassword = await bcrypt.hash(request.body.password, saltRounds);
     const user = await User.create({
       name: request.body.name,
       email: request.body.email,

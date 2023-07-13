@@ -50,11 +50,15 @@ passport.use(
     (userName, password, done) => {
       User.findOne({ where: { email: userName } })
         .then(async (user) => {
-          const result = await bcrypt.compare(password, user.password);
-          if (result) {
-            return done(null, user);
+          if (user) {
+            const result = await bcrypt.compare(password, user.password);
+            if (result) {
+              return done(null, user);
+            } else {
+              return done("Invalid Credentials.");
+            }
           } else {
-            return done("Invalid password.");
+            return done("Invalid Credentials.");
           }
         })
         .catch((err) => {
