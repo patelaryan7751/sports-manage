@@ -5,6 +5,29 @@ const { Session, UserSession, Sport, User } = require("../models");
 
 router.post("/", async (request, response) => {
   const selectedPlayers = request.body.selectedPlayersId.split(",");
+  console.log(
+    request.body.selectedPlayersId,
+    "mi",
+    request.body.selectedPlayersId === ""
+  );
+  console.log(selectedPlayers[0], "ki");
+  if (request.body.selectedPlayersId === "") {
+    request.flash("error", "Please select at least one player");
+    return response.redirect(`/sports/${request.body.sport_id}/session/create`);
+  }
+  if (request.body.time.trim() === "") {
+    request.flash("error", "Time cannot be empty");
+    return response.redirect(`/sports/${request.body.sport_id}/session/create`);
+  }
+  if (request.body.place.trim() === "") {
+    request.flash("error", "Place cannot be empty");
+    return response.redirect(`/sports/${request.body.sport_id}/session/create`);
+  }
+  if (Number(request.body.numberOfPlayers) < 0) {
+    request.flash("error", "Number of players cannot be negative");
+    return response.redirect(`/sports/${request.body.sport_id}/session/create`);
+  }
+
   selectedPlayers.push(request.user.id);
   try {
     const session = await Session.create({
@@ -73,10 +96,14 @@ router.get("/:id", async (request, response) => {
 });
 router.post("/:id/", async (request, response) => {
   try {
+    if (request.body.cancelReason.trim() === "") {
+      request.flash("error", "Reason cannot be empty");
+      return response.redirect(`/sessions/${request.params.id}/cancel`);
+    }
     await Session.update(
       {
         isCancelled: true,
-        cancelReason: request.body.cancelReason,
+        cancelReason: request.body.cancelReason.trim(),
       },
       { where: { id: request.params.id } }
     );
