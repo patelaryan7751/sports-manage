@@ -23,6 +23,9 @@ const profileRoutes = require("./routes/profile");
 const sigoutRoutes = require("./routes/signout");
 const playerSessionsRoutes = require("./routes/playerSessions");
 const reportsRoutes = require("./routes/reports");
+const flash = require("connect-flash");
+app.set("views", path.join(__dirname, "views"));
+app.use(flash());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("shh! some secret string"));
@@ -41,6 +44,10 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(function (request, response, next) {
+  response.locals.messages = request.flash();
+  next();
+});
 passport.use(
   new LocalStrategy(
     {
@@ -55,10 +62,12 @@ passport.use(
             if (result) {
               return done(null, user);
             } else {
-              return done("Invalid Credentials.");
+              return done(null, false, { message: "Invalid password" });
             }
           } else {
-            return done("Invalid Credentials.");
+            return done(null, false, {
+              message: "Invalid account credentials",
+            });
           }
         })
         .catch((err) => {

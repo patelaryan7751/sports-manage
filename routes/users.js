@@ -7,17 +7,25 @@ const saltRounds = 10;
 
 router.post("/", async (request, response) => {
   try {
+    if (request.body.email.trim() === "") {
+      request.flash("error", "Email cannot be empty");
+      return response.redirect("/signup");
+    }
+    if (request.body.password.trim() === "") {
+      request.flash("error", "Password cannot be empty");
+      return response.redirect("/signup");
+    }
     const existingUser = await User.findOne({
       where: { email: request.body.email },
     });
     const isPasswordSixLettered = request.body.password.length >= 6;
     if (existingUser) {
-      return response.status(400).json({ error: "Email already exists" });
+      request.flash("error", "Email already exists");
+      return response.redirect("/signup");
     }
     if (!isPasswordSixLettered) {
-      return response
-        .status(400)
-        .json({ error: "Password should be 6 characters long" });
+      request.flash("error", "Password should be 6 characters long");
+      return response.redirect("/signup");
     }
     const hashedPassword = await bcrypt.hash(request.body.password, saltRounds);
     const user = await User.create({
