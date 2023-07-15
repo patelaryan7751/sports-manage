@@ -7,6 +7,10 @@ const saltRounds = 10;
 
 router.post("/", async (request, response) => {
   try {
+    if (request.body.name.trim() === "") {
+      request.flash("error", "Name cannot be empty");
+      return response.redirect("/signup");
+    }
     if (request.body.email.trim() === "") {
       request.flash("error", "Email cannot be empty");
       return response.redirect("/signup");

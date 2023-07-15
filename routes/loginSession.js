@@ -7,6 +7,7 @@ router.post(
   "/",
   passport.authenticate("local", {
     failureRedirect: "/login",
+    failureFlash: true,
   }),
   async (request, response) => {
     console.log(request.user);

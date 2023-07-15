@@ -7,7 +7,7 @@ const requirePublisher = (req, res, next) => {
   if (req.user && req.user.role === "player") {
     return next();
   } else {
-    res.status(401).json({ message: "Unauthorized user." });
+    res.render("./pages/404");
   }
 };
 

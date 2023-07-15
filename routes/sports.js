@@ -9,12 +9,16 @@ const requirePublisher = (req, res, next) => {
   if (req.user && req.user.role === "admin") {
     return next();
   } else {
-    res.status(401).json({ message: "Unauthorized user." });
+    res.render("./pages/404");
   }
 };
 
 router.post("/", requirePublisher, async (request, response) => {
   try {
+    if (request.body.name.trim() === "") {
+      request.flash("error", "Name cannot be empty");
+      return response.redirect("/sports/create");
+    }
     await Sport.createNewSport(request.body.name, request.user.id);
     return response.redirect("/dashboard");
   } catch (error) {
@@ -59,6 +63,15 @@ router.get("/:id", async (request, response) => {
       sessions: sessions,
       user: user,
     });
+  } catch (error) {
+    response.status(500).json({ error: error });
+  }
+});
+
+router.get("/delete/:id", async (request, response) => {
+  try {
+    await Sport.removeSport(request.params.id);
+    response.status(200).json({ message: "Sport deleted successfully" });
   } catch (error) {
     response.status(500).json({ error: error });
   }

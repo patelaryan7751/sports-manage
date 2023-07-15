@@ -55,6 +55,12 @@ passport.use(
       passwordField: "password",
     },
     (userName, password, done) => {
+      if (userName.trim() === "") {
+        return done(null, false, { message: "Email cannot be empty" });
+      }
+      if (password.trim() === "") {
+        return done(null, false, { message: "Password cannot be empty" });
+      }
       User.findOne({ where: { email: userName } })
         .then(async (user) => {
           if (user) {
@@ -121,4 +127,8 @@ app.use("/loginSession", loginSessionsRoutes);
 app.use("/signup", ensureNotAuthenticated, signupRoutes);
 app.use("/signout", sigoutRoutes);
 app.use("/profile", connectEnsureLogin.ensureLoggedIn(), profileRoutes);
+app.use((req, res, next) => {
+  res.render("./pages/404");
+  next();
+});
 module.exports = app;
