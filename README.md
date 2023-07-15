@@ -5,6 +5,7 @@
 Sports Manager is a web-based application built using Node.js, Express.js, and Postgres, designed to facilitate sports management and organization. It provides features for admins and players to create sports, schedule and join sports sessions, and generate session reports.
 
 The deployed application is available here https://sports-manage.onrender.com/
+
 ## Key Features
 
 - **Admins can create sports**: Admin users have the privilege to create different sports by providing a name for each sport.
@@ -29,13 +30,11 @@ The deployed application is available here https://sports-manage.onrender.com/
 
 ![image](https://github.com/patelaryan7751/sports-manage/assets/59426397/28a037e0-bb72-4ddc-9526-4cf6fc14033e)
 
-
 - **Player Session Creation**: Form for players to create a new sport session, providing session details.
 
 ![image](https://github.com/patelaryan7751/sports-manage/assets/59426397/f02b748e-112c-4bf1-a784-3cff413aae66)
 
 ![image](https://github.com/patelaryan7751/sports-manage/assets/59426397/a4f6ba2b-da8d-4330-b5ac-62be72ffe191)
-
 
 - **Player Session Details**: Detailed view of a session, including sport type, team composition, date, time, and venue.
 
@@ -43,12 +42,8 @@ The deployed application is available here https://sports-manage.onrender.com/
 
 ![image](https://github.com/patelaryan7751/sports-manage/assets/59426397/4fb82c7e-ba3c-4f91-a226-3d374a022c5e)
 
-
 - **Admin Session Reports**: Reports showing the number of sessions played and the popularity of different sports in a specified time period.
 
 ![image](https://github.com/patelaryan7751/sports-manage/assets/59426397/7002c712-11a9-4599-bf5d-a51cbfda06b9)
 
 ![image](https://github.com/patelaryan7751/sports-manage/assets/59426397/03b8586c-9067-4401-af74-b7c1ccf0166e)
-
-
-
