@@ -5,12 +5,6 @@ const { Session, UserSession, Sport, User } = require("../models");
 
 router.post("/", async (request, response) => {
   const selectedPlayers = request.body.selectedPlayersId.split(",");
-  console.log(
-    request.body.selectedPlayersId,
-    "mi",
-    request.body.selectedPlayersId === ""
-  );
-  console.log(selectedPlayers[0], "ki");
   if (request.body.selectedPlayersId === "") {
     request.flash("error", "Please select at least one player");
     return response.redirect(`/sports/${request.body.sport_id}/session/create`);

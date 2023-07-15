@@ -119,12 +119,10 @@ describe("Todo Application", function () {
       .set("Accept", "application/json");
     let parsedGroupedPlayersResponse = JSON.parse(groupedPlayersResponse.text);
     const playersCount = parsedGroupedPlayersResponse.length;
-    console.log(parsedGroupedPlayersResponse, "jkkk");
     const selectedPlayersId = parsedGroupedPlayersResponse
       .map((player) => player.id)
       .slice(0, playersCount)
       .join(",");
-    console.log(selectedPlayersId, "hiii");
     res = await agent.get(`/sports/${sportId}/session/create`);
     csrfToken = extractCSRFToken(res);
     const response = await agent.post(`/sessions`).send({
