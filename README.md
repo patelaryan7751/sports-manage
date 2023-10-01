@@ -4,7 +4,7 @@
 
 Sports Manager is a web-based application built using Node.js, Express.js, and Postgres, designed to facilitate sports management and organization. It provides features for admins and players to create sports, schedule and join sports sessions, and generate session reports.
 
-The deployed application is available here https://sports-manage.onrender.com/
+The deployed application is available here https://sports-manager.onrender.com/
 
 ## Key Features
 
